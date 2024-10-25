@@ -1,0 +1,17 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+node_modules
+dist
+
+# Logs
+logs
+
+# Testing
+coverage
+__tests__
+
+
+# using yarn / ignore npm files
+package-lock.json
+.npmrc
+
+.DC_Store
