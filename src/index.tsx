@@ -1,20 +1,27 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
-
+// Using MD only
 import {
   Box,
   Deck,
   FlexBox,
   FullScreen,
   AnimatedProgress,
-  MarkdownSlideSet
+  MarkdownSlideSet,
+  Slide,
+  Notes,
+  mdxComponentMap
 } from 'spectacle';
 
+// import mdContent from './presentation.md';
 
-// SPECTACLE_CLI_MD_START
-import mdContent from './presentation.md';
-// SPECTACLE_CLI_MD_END
+// Using MDX
+import { MDXProvider } from '@mdx-js/react';
+
+import slides, { notes } from './presentation.mdx';
+
+// import mdContent from './presentation.md';
 
 // SPECTACLE_CLI_THEME_START
 const theme = {
@@ -47,7 +54,6 @@ const template = () => (
     </Box>
   </FlexBox>
 );
-// SPECTACLE_CLI_TEMPLATE_END
 
 const Presentation = ({children = mdContent}) => (
   <>
@@ -58,5 +64,25 @@ const Presentation = ({children = mdContent}) => (
   </>
 );
 
+// SPECTACLE_CLI_TEMPLATE_END
+
+const MDXPresentation = () => (
+  <MDXProvider components={mdxComponentMap}>
+    <Deck theme={theme} template={template}>
+      {slides
+        .map((MDXSlide, i) => [MDXSlide, notes[i]])
+        .map(([MDXSlide, MDXNote], i) => (
+          <Slide key={`slide-${i}`} slideNum={i}>
+            <MDXSlide />
+            <Notes>
+              <MDXNote />
+            </Notes>
+          </Slide>
+        ))}
+    </Deck>
+  </MDXProvider>
+);
+
+
 const root = createRoot(document.getElementById('app')!);
-root.render(<Presentation />);
+root.render(<MDXPresentation />);

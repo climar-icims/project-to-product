@@ -10,8 +10,4 @@ coverage
 __tests__
 
 
-# using yarn / ignore npm files
-package-lock.json
-.npmrc
-
 .DC_Store
